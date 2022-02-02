@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <sys/wait.h>
 #include <unistd.h>
+#include <stdlib.h>
 
 #define MAX_ALARMS 100
 #define DATE_FORMAT "%Y-%m-%d %H:%M:%S"
@@ -45,7 +46,7 @@ void print_active_alarms()
             struct tm tm_time;
             tm_time = *localtime(&alarms[i].time);
             strftime(time_str, sizeof(time_str), DATE_FORMAT, &tm_time);
-            printf("Alarm %d at %s\n", i, time_str);
+            printf("Alarm %d at %s\n", i + 1, time_str);
         }
     }
 }
@@ -56,7 +57,8 @@ void set_alarm_x_seconds_from_now(int seconds)
     a.time = time(NULL) + seconds;
     // Create child process
     pid_t p[2];
-    if(pipe(p) < 0) exit(1);
+    if (pipe(p) < 0)
+        exit(1);
 
     pid_t local_pid = fork();
     if (local_pid == 0)
@@ -81,5 +83,15 @@ void set_alarm_x_seconds_from_now(int seconds)
         alarms[idx] = a;
         idx++;
         close(p[0]);
+    }
+}
+
+void kill_alarm(int alarm_id)
+{
+    if (alarms[alarm_id - 1].pid != 0)
+    {
+        kill(alarms[alarm_id - 1].pid, SIGKILL);
+        alarms[alarm_id].pid = 0;
+        signal(SIGCHLD, SIG_IGN);
     }
 }

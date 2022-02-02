@@ -31,6 +31,7 @@ int parseinput()
         printf("Please enter the number of the alarm you want to cancel: ");
         int alarm;
         scanf("%d", &alarm);
+        kill_alarm(alarm);
         printf("You have cancelled alarm %d\n", alarm);
     }
     else if(strcmp(&inp, "r") == 0)
