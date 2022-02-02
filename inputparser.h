@@ -5,12 +5,14 @@
 int parseinput()
 {
     char inp;
+    printf("> ");
     scanf("%s", &inp);
-    if(strcmp(&inp, "s") == 0)
+    if(inp == 's')
     {
-        printf("Please enter the time you want to set the alarm to\n");
+        printf("Please enter the time you want to set the alarm to: ");
         char time[32];
         scanf("%s", &time);
+        printf("Alarm set for %s\n", time);
     }
     else if(strcmp(&inp, "l") == 0)
     {
@@ -19,7 +21,7 @@ int parseinput()
     }
     else if(strcmp(&inp, "c") == 0)
     {
-        printf("Please enter the number of the alarm you want to cancel\n");
+        printf("Please enter the number of the alarm you want to cancel: ");
         int alarm;
         scanf("%d", &alarm);
         printf("You have cancelled alarm %d\n", alarm);
