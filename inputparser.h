@@ -8,16 +8,18 @@ int parseinput()
     char inp;
     printf("> ");
     scanf("%s", &inp);
+    getchar();
     if(strcmp(&inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
-        char time[32];
-        scanf("%s", &time);
-        add_alarm(time);
+        char time_str[20];
+        fgets(time_str, 20, stdin);
+        add_alarm(time_str);
     }
     else if(strcmp(&inp, "l") == 0)
     {
         printf("You have the following alarms set:\n");
+        print_active_alarms();
 
     }
     else if(strcmp(&inp, "c") == 0)
