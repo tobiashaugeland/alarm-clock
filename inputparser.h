@@ -33,6 +33,14 @@ int parseinput()
         scanf("%d", &alarm);
         printf("You have cancelled alarm %d\n", alarm);
     }
+    else if(strcmp(&inp, "r") == 0)
+    {
+        printf("Enter in how many seconds to set the alarm: ");
+        int time_str;
+        scanf("%d", &time_str);
+        set_alarm_x_seconds_from_now(time_str);
+        printf("You have set the alarm in %d seconds\n", time_str);
+    }
     else if(strcmp(&inp, "x") == 0)
     {
         printf("You have exited the program\n");

@@ -1,10 +1,16 @@
-#pragma once
 #define __USE_XOPEN
 #define _GNU_SOURCE
+
 #include <time.h>
 #include <stdio.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+
 #define MAX_ALARMS 100
 #define DATE_FORMAT "%Y-%m-%d %H:%M:%S"
+
+#pragma once
 
 struct alarm
 {
@@ -41,5 +47,22 @@ void print_active_alarms()
             strftime(time_str, sizeof(time_str), DATE_FORMAT, &tm_time);
             printf("Alarm %d at %s\n", i, time_str);
         }
+    }
+}
+
+void set_alarm_x_seconds_from_now(int seconds)
+{
+    struct alarm a;
+    a.time = time(NULL) + seconds;
+    //Create child process
+    int local_pid = fork();
+    if (local_pid == 0)
+    {
+        while(time(NULL) < a.time)
+        {
+            sleep(1);
+        }
+        printf("Alarm!\n");
+        exit(0);
     }
 }
