@@ -7,8 +7,9 @@ int parseinput()
 {
     char inp;
     printf("> ");
-    scanf("%s", &inp);
+    fgets(&inp, 2, stdin);
     getchar();
+    while(getchar() != '\n');
     if(strcmp(&inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
@@ -38,5 +39,7 @@ int parseinput()
     {
         printf("Please enter a valid input\n");
     }
+    //clear input buffer
+    while(getchar() != '\n');
     return 1;
 }
