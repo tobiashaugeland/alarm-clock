@@ -72,6 +72,7 @@ void set_alarm_x_seconds_from_now(int seconds)
             sleep(1);
         }
         printf("Alarm!\n");
+        system("mpg123 -q alarm.mp3");
         exit(0);
     }
     else
@@ -92,6 +93,6 @@ void kill_alarm(int alarm_id)
     {
         kill(alarms[alarm_id - 1].pid, SIGKILL);
         alarms[alarm_id].pid = 0;
-        signal(SIGCHLD, SIG_IGN);
+        waitpid(alarms[alarm_id - 1].pid, NULL, 0);
     }
 }
