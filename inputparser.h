@@ -7,7 +7,7 @@ int parseinput()
     char inp;
     printf("> ");
     scanf("%s", &inp);
-    if(inp == 's')
+    if(strcmp(&inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
         char time[32];
