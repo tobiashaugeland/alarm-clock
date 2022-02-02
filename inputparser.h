@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <string.h>
+#include "alarm.h"
 
 int parseinput()
 {
@@ -12,7 +13,7 @@ int parseinput()
         printf("Please enter the time you want to set the alarm to: ");
         char time[32];
         scanf("%s", &time);
-        printf("Alarm set for %s\n", time);
+        add_alarm(time);
     }
     else if(strcmp(&inp, "l") == 0)
     {
