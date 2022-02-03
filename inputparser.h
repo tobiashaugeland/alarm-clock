@@ -39,6 +39,7 @@ int parseinput()
         scanf("%d", &alarm);
         kill_alarm(alarm);
         printf("You have cancelled alarm %d\n", alarm);
+        getchar();
     }
     else if (strcmp(&inp, "r") == 0)
     {
@@ -47,6 +48,7 @@ int parseinput()
         scanf("%d", &time_str);
         set_alarm_x_seconds_from_now(time_str);
         printf("You have set the alarm in %d seconds\n", time_str);
+        getchar();
     }
     else if (strcmp(&inp, "x") == 0)
     {
@@ -58,6 +60,5 @@ int parseinput()
     {
         printf("%s is not a valid input\n", &inp);
     }
-    getchar();
     return 1;
 }

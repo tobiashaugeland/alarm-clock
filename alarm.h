@@ -92,7 +92,7 @@ void kill_alarm(int alarm_id)
     if (alarms[alarm_id - 1].pid != 0)
     {
         kill(alarms[alarm_id - 1].pid, SIGKILL);
-        alarms[alarm_id].pid = 0;
+        alarms[alarm_id - 1].pid = 0;
         waitpid(alarms[alarm_id - 1].pid, NULL, 0);
     }
 }
