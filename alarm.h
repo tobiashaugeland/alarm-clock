@@ -21,19 +21,7 @@ struct alarm
 struct alarm alarms[MAX_ALARMS];
 int idx = 0;
 
-void add_alarm(char *time_str)
-{
-    struct alarm a;
-    struct tm tm_time;
-    time_t alarm_time;
-    strptime(time_str, DATE_FORMAT, &tm_time);
-    alarm_time = mktime(&tm_time);
-    printf("Scheduling alarm in %ld seconds\n", alarm_time - time(NULL));
-    a.time = alarm_time;
-    a.pid = 123;
-    alarms[idx] = a;
-    idx++;
-}
+
 
 void print_active_alarms()
 {
@@ -64,7 +52,7 @@ void set_alarm_x_seconds_from_now(int seconds)
     if (local_pid == 0)
     {
         pid_t pid = getpid();
-        write(p[1], &pid, sizeof(a));
+        write(p[1], &pid, sizeof(pid));
         close(p[1]);
         close(p[0]);
         while (time(NULL) < a.time)
@@ -85,6 +73,17 @@ void set_alarm_x_seconds_from_now(int seconds)
         idx++;
         close(p[0]);
     }
+}
+
+void add_alarm(char *time_str)
+{
+    struct tm tm_time;
+    time_t alarm_time;
+    strptime(time_str, DATE_FORMAT, &tm_time);
+    alarm_time = mktime(&tm_time);
+    time_t current_time = time(NULL);
+    printf("Scheduling alarm in %ld seconds\n", alarm_time - current_time);
+    set_alarm_x_seconds_from_now(alarm_time - current_time);
 }
 
 void kill_alarm(int alarm_id)
