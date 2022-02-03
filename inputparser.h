@@ -7,7 +7,7 @@ int parseinput()
 {
     char inp;
     printf("> ");
-    if (fgets(&inp, 2, stdin))
+    if (fgets(&inp, 3, stdin))
     {
         char *p;
         if (p = strchr(&inp, '\n'))
