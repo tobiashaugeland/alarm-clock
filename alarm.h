@@ -10,6 +10,12 @@
 #define MAX_ALARMS 100
 #define DATE_FORMAT "%Y-%m-%d %H:%M:%S"
 
+#ifdef __linux__
+    #define SOUND_PLAYER "mpg123 -q alarm.mp3"
+#elif __APPLE__
+    #define SOUND_PLAYER "afplay alarm.mp3"
+#endif
+
 #pragma once
 
 struct alarm
@@ -47,6 +53,9 @@ void set_alarm_x_seconds_from_now(int seconds)
         exit(1);
 
     pid_t local_pid = fork();
+    if (local_pid == -1){
+        fprintf(stderr, "An error has occured forking");
+    }
     if (local_pid == 0)
     {
         pid_t pid = getpid();
@@ -57,8 +66,10 @@ void set_alarm_x_seconds_from_now(int seconds)
         {
             sleep(1);
         }
-        printf("Alarm!\n");
-        // system("mpg123 -q alarm.mp3");
+        printf("\rAlarm!\n>");
+        fflush(stdout);
+        char *mp3_command[] = {"mpg123", "-q", "alarm.mp3", NULL};
+        execvp(mp3_command[0], mp3_command);
         exit(0);
     }
     else
