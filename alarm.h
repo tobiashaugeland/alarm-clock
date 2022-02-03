@@ -100,7 +100,8 @@ void kill_alarm(int alarm_id)
     if (alarms[alarm_id - 1].pid != 0)
     {
         kill(alarms[alarm_id - 1].pid, SIGKILL);
-        alarms[alarm_id - 1].pid = 0;
+        memset(&alarms[alarm_id-1], 0, sizeof(alarms[alarm_id-1]));
+
         waitpid(alarms[alarm_id - 1].pid, NULL, 0);
     }
 }
@@ -112,7 +113,7 @@ void kill_all_alarms()
         if (alarms[i].pid != 0)
         {
             kill(alarms[i].pid, SIGKILL);
-            alarms[i].pid = 0;
+            memset(&alarms[i], 0, sizeof(alarms[i]));
             waitpid(alarms[i].pid, NULL, 0);
         }
     }
@@ -124,7 +125,7 @@ void remove_inactive_alarms()
     {
         if (alarms[i].pid != 0 && !waitpid(alarms[i].pid, NULL, WNOHANG) == 0)
         {
-            alarms[i].pid = 0;
+            memset(&alarms[i], 0, sizeof(alarms[i]));
         }
     }
 }
