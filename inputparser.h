@@ -45,6 +45,7 @@ int parseinput()
     else if(strcmp(&inp, "x") == 0)
     {
         printf("You have exited the program\n");
+        kill_all_alarms();
         return 0;
     }
     else

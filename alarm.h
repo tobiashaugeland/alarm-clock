@@ -28,7 +28,7 @@ void add_alarm(char *time_str)
     time_t alarm_time;
     strptime(time_str, DATE_FORMAT, &tm_time);
     alarm_time = mktime(&tm_time);
-    printf("Scheduling alarm in %d seconds\n", alarm_time - time(NULL));
+    printf("Scheduling alarm in %ld seconds\n", alarm_time - time(NULL));
     a.time = alarm_time;
     a.pid = 123;
     alarms[idx] = a;
@@ -94,5 +94,18 @@ void kill_alarm(int alarm_id)
         kill(alarms[alarm_id - 1].pid, SIGKILL);
         alarms[alarm_id].pid = 0;
         waitpid(alarms[alarm_id - 1].pid, NULL, 0);
+    }
+}
+
+void kill_all_alarms()
+{
+    for (int i = 0; i < MAX_ALARMS; i++)
+    {
+        if (alarms[i].pid != 0)
+        {
+            kill(alarms[i].pid, SIGKILL);
+            alarms[i].pid = 0;
+            waitpid(alarms[i].pid, NULL, 0);
+        }
     }
 }
