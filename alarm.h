@@ -65,8 +65,7 @@ void set_alarm_x_seconds_from_now(int seconds)
         sleep(seconds);
         printf("\rAlarm!\n>");
         fflush(stdout);
-        char *mp3_command[] = {"mpg123", "-q", "alarm.mp3", NULL};
-        execvp(mp3_command[0], mp3_command);
+        execlp("mpg123", "mpg123", "-q", "alarm.mp3", NULL);
         exit(0);
     }
     else
