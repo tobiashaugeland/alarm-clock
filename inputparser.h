@@ -9,6 +9,7 @@ int parseinput()
     printf("> ");
     if (fgets(&inp, 3, stdin))
     {
+        //Consumes everything after the first character
         char *p;
         if (p = strchr(&inp, '\n'))
         { // check exist newline
