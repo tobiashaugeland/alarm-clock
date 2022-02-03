@@ -27,6 +27,7 @@ int parseinput()
         char time_str[20];
         fgets(time_str, 20, stdin);
         add_alarm(time_str);
+        getchar();
     }
     else if (strcmp(&inp, "l") == 0)
     {
