@@ -62,10 +62,7 @@ void set_alarm_x_seconds_from_now(int seconds)
         write(p[1], &pid, sizeof(pid));
         close(p[1]);
         close(p[0]);
-        while (time(NULL) < a.time)
-        {
-            sleep(1);
-        }
+        sleep(seconds);
         printf("\rAlarm!\n>");
         fflush(stdout);
         char *mp3_command[] = {"mpg123", "-q", "alarm.mp3", NULL};
@@ -119,7 +116,7 @@ void kill_all_alarms()
     }
 }
 
-void remove_inactive_alarms()
+void kill_inactive_alarms()
 {
     for (int i = 0; i < MAX_ALARMS; i++)
     {
