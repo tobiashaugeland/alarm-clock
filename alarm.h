@@ -115,7 +115,7 @@ void kill_all_alarms()
     }
 }
 
-void remove_inactive_alarms()
+void kill_inactive_alarms()
 {
     for (int i = 0; i < MAX_ALARMS; i++)
     {
