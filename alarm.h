@@ -45,6 +45,11 @@ void print_active_alarms()
 
 void set_alarm_x_seconds_from_now(int seconds)
 {
+    if(seconds <= 0)
+    {
+        fprintf(stderr, "Invalid time\n");
+        return;
+    }
     struct alarm a;
     a.time = time(NULL) + seconds;
     // Create child process
