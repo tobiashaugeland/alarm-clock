@@ -31,7 +31,7 @@ int parseinput()
     }
     else if (strcmp(&inp, "l") == 0)
     {
-        remove_inactive_alarms();
+        kill_inactive_alarms();
         printf("You have the following alarms set:\n");
         print_active_alarms();
     }
