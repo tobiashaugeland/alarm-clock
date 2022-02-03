@@ -21,8 +21,6 @@ struct alarm
 struct alarm alarms[MAX_ALARMS];
 int idx = 0;
 
-
-
 void print_active_alarms()
 {
     for (int i = 0; i < MAX_ALARMS; i++)
@@ -60,7 +58,7 @@ void set_alarm_x_seconds_from_now(int seconds)
             sleep(1);
         }
         printf("Alarm!\n");
-        system("mpg123 -q alarm.mp3");
+        // system("mpg123 -q alarm.mp3");
         exit(0);
     }
     else
@@ -105,6 +103,17 @@ void kill_all_alarms()
             kill(alarms[i].pid, SIGKILL);
             alarms[i].pid = 0;
             waitpid(alarms[i].pid, NULL, 0);
+        }
+    }
+}
+
+void remove_inactive_alarms()
+{
+    for (int i = 0; i < MAX_ALARMS; i++)
+    {
+        if (alarms[i].pid != 0 && !waitpid(alarms[i].pid, NULL, WNOHANG) == 0)
+        {
+            alarms[i].pid = 0;
         }
     }
 }
