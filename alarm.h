@@ -50,6 +50,10 @@ void set_alarm_x_seconds_from_now(int seconds)
         fprintf(stderr, "Invalid time\n");
         return;
     }
+    if(idx >= MAX_ALARMS)
+    {
+        idx = 0;
+    }
     struct alarm a;
     a.time = time(NULL) + seconds;
     // Create child process
