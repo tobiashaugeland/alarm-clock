@@ -63,10 +63,6 @@ void set_alarm_x_seconds_from_now(int seconds)
     }
     if (local_pid == 0)
     {
-        pid_t pid = getpid();
-        write(p[1], &pid, sizeof(pid));
-        close(p[1]);
-        close(p[0]);
         sleep(seconds);
         printf("\rAlarm!\n>");
         fflush(stdout);
@@ -75,13 +71,9 @@ void set_alarm_x_seconds_from_now(int seconds)
     }
     else
     {
-        close(p[1]);
-        pid_t c;
-        read(p[0], &c, sizeof(c));
-        a.pid = c;
+        a.pid = local_pid;
         alarms[idx] = a;
         idx++;
-        close(p[0]);
     }
 }
 
