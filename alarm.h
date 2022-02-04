@@ -53,10 +53,6 @@ void set_alarm_x_seconds_from_now(int seconds)
     struct alarm a;
     a.time = time(NULL) + seconds;
     // Create child process
-    pid_t p[2];
-    if (pipe(p) < 0)
-        exit(1);
-
     pid_t local_pid = fork();
     if (local_pid == -1){
         fprintf(stderr, "An error has occured forking");
