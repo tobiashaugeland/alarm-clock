@@ -11,12 +11,6 @@
 #define MAX_ALARMS 100
 #define DATE_FORMAT "%Y-%m-%d %H:%M:%S"
 
-#ifdef __linux__
-    #define SOUND_PLAYER "mpg123 -q alarm.mp3"
-#elif __APPLE__
-    #define SOUND_PLAYER "afplay alarm.mp3"
-#endif
-
 #pragma once
 
 struct alarm
@@ -34,7 +28,7 @@ void print_active_alarms()
     {
         if (alarms[i].pid != 0)
         {
-            printf("Pid is %d\n", alarms[i].pid);
+            // printf("Pid is %d\n", alarms[i].pid);
             char time_str[32];
             struct tm tm_time;
             tm_time = *localtime(&alarms[i].time);

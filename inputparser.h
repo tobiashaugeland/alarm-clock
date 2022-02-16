@@ -5,13 +5,13 @@
 
 int parseinput()
 {
-    char inp;
+    char inp[100];
     printf("> ");
-    if (fgets(&inp, 3, stdin))
+    if (fgets(inp, 100, stdin))
     {
         //Consumes everything after the first character
         char *p;
-        if (p = strchr(&inp, '\n'))
+        if (p = strchr(inp, '\n'))
         { // check exist newline
             *p = 0;
         }
@@ -21,7 +21,7 @@ int parseinput()
             scanf("%*c"); // clear upto newline
         }
     }
-    if (strcmp(&inp, "s") == 0)
+    if (strcmp(inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
         char time_str[20];
@@ -29,13 +29,13 @@ int parseinput()
         add_alarm(time_str);
         getchar();
     }
-    else if (strcmp(&inp, "l") == 0)
+    else if (strcmp(inp, "l") == 0)
     {
         kill_inactive_alarms();
         printf("You have the following alarms set:\n");
         print_active_alarms();
     }
-    else if (strcmp(&inp, "c") == 0)
+    else if (strcmp(inp, "c") == 0)
     {
         printf("Please enter the number of the alarm you want to cancel: ");
         int alarm;
@@ -44,7 +44,7 @@ int parseinput()
         printf("You have cancelled alarm %d\n", alarm);
         getchar();
     }
-    else if (strcmp(&inp, "r") == 0)
+    else if (strcmp(inp, "r") == 0)
     {
         printf("Enter in how many seconds to set the alarm: ");
         int time_str;
@@ -53,7 +53,7 @@ int parseinput()
         printf("You have set the alarm in %d seconds\n", time_str);
         getchar();
     }
-    else if (strcmp(&inp, "x") == 0)
+    else if (strcmp(inp, "x") == 0)
     {
         printf("You have exited the program\n");
         kill_all_alarms();
@@ -61,7 +61,7 @@ int parseinput()
     }
     else
     {
-        printf("%s is not a valid input\n", &inp);
+        printf("%s is not a valid input\n", inp);
     }
     return 1;
 }
