@@ -11,7 +11,7 @@ int parseinput()
     {
         //Consumes everything after the first character
         char *p;
-        if (p = strchr(&inp, '\n'))
+        if (p == strchr(&inp, '\n'))
         { // check exist newline
             *p = 0;
         }

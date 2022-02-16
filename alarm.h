@@ -1,6 +1,5 @@
 #define __USE_XOPEN
 #define _GNU_SOURCE
-#define _POSIX_SOURCE
 #include <sys/types.h>
 #include <signal.h>
 #include <time.h>
