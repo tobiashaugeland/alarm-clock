@@ -40,11 +40,7 @@ void print_active_alarms()
 
 void set_alarm_x_seconds_from_now(int seconds)
 {
-    if(seconds <= 0)
-    {
-        fprintf(stderr, "Invalid time\n");
-        return;
-    }
+
     if(idx >= MAX_ALARMS)
     {
         idx = 0;
@@ -79,8 +75,11 @@ void add_alarm(char *time_str)
     strptime(time_str, DATE_FORMAT, &tm_time);
     alarm_time = mktime(&tm_time);
     time_t current_time = time(NULL);
-    printf("Scheduling alarm in %ld seconds\n", alarm_time - current_time);
-    set_alarm_x_seconds_from_now(alarm_time - current_time);
+    if (alarm_time - current_time >0){
+        printf("Scheduling alarm in %ld seconds\n", alarm_time - current_time);
+        set_alarm_x_seconds_from_now(alarm_time - current_time);
+    }
+    else{printf("Invalid time\n");}
 }
 
 void kill_alarm(int alarm_id)
