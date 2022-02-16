@@ -11,7 +11,7 @@ int parseinput()
     {
         //Consumes everything after the first character
         char *p;
-        if (p == strchr(&inp, '\n'))
+        if (p = strchr(&inp, '\n'))
         { // check exist newline
             *p = 0;
         }
@@ -19,7 +19,6 @@ int parseinput()
         {
             scanf("%*[^\n]");
             scanf("%*c"); // clear upto newline
-        }
     }
     if (strcmp(&inp, "s") == 0)
     {
