@@ -19,6 +19,7 @@ int parseinput()
         {
             scanf("%*[^\n]");
             scanf("%*c"); // clear upto newline
+        }
     }
     if (strcmp(&inp, "s") == 0)
     {
