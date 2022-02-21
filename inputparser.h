@@ -6,29 +6,48 @@
 
 #define BUF_SIZE 128
 
+/**
+ * @brief Reads chars into char array from stdin.
+ * 
+ * @param output Pointer to the first char in the char array you want your output
+ * @param buffersize Size of the the char array in bytes
+ */
+
 int read_from_stdin(char *output, size_t buffersize)
 {
+    // Need to set all bytes to 0 for the format string in sscanf to work correctly
     memset(output, 0, buffersize);
     char format[32];
     memset(format, 0, 32);
+
+    // Create format string
     char size_str[32];
     snprintf(size_str, 32, "%d", buffersize);
     format[0] = '%';
     strcat(format, size_str);
     int size = strlen(format);
     format[size] = 'c';
+
+    // Read chars from stdin, to output
     char line[buffersize];
     if (fgets(line, buffersize, stdin))
     {
         if (sscanf(line, format, output) == 1)
         {
             int size = strlen(output);
-            output[size - 1] = '\0';
+            output[size - 1] = '\0'; // remove newline
             return 1;
         }
     }
     return 0;
 }
+
+/**
+ * @brief Checks the users inputs against the different commands,
+ * then calls the appropriate alarm functions.
+ * 
+ * @return 1 if the program should continue, 0 if it should stop
+ */
 
 int parseinput()
 {
