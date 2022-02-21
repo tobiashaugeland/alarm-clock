@@ -1,6 +1,7 @@
 #pragma once
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "alarm.h"
 
 #define BUF_SIZE 128
@@ -8,9 +9,17 @@
 
 int read_from_stdin(char *output, size_t buffersize){
     memset(output, 0, buffersize);
+    char format[32];
+    memset(format, 0, 32);
+    char size_str[32];
+    snprintf(size_str, 32, "%d", buffersize);
+    format[0] = '%';
+    strcat(format, size_str);
+    int size = strlen(format);
+    format[size] = 'c';
     char line[buffersize];
     if (fgets(line, buffersize, stdin)){
-        if (sscanf(line, BUF_FORMAT, output) == 1){
+        if (sscanf(line, format, output) == 1){
             int size = strlen(output);
             output[size-1] = '\0';
             return 1;
