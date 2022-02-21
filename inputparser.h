@@ -6,7 +6,8 @@
 
 #define BUF_SIZE 128
 
-int read_from_stdin(char *output, size_t buffersize){
+int read_from_stdin(char *output, size_t buffersize)
+{
     memset(output, 0, buffersize);
     char format[32];
     memset(format, 0, 32);
@@ -17,10 +18,12 @@ int read_from_stdin(char *output, size_t buffersize){
     int size = strlen(format);
     format[size] = 'c';
     char line[buffersize];
-    if (fgets(line, buffersize, stdin)){
-        if (sscanf(line, format, output) == 1){
+    if (fgets(line, buffersize, stdin))
+    {
+        if (sscanf(line, format, output) == 1)
+        {
             int size = strlen(output);
-            output[size-1] = '\0';
+            output[size - 1] = '\0';
             return 1;
         }
     }
@@ -32,7 +35,7 @@ int parseinput()
     char inp[BUF_SIZE];
     printf("> ");
     read_from_stdin(inp, BUF_SIZE);
-    
+
     if (strcmp(inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
@@ -54,7 +57,6 @@ int parseinput()
         int alarm;
         sscanf(alarm_str, "%d", &alarm);
         kill_alarm(alarm);
-        printf("You have cancelled alarm %d\n", alarm);
     }
     else if (strcmp(inp, "r") == 0)
     {
@@ -62,7 +64,7 @@ int parseinput()
         char alarm_str[BUF_SIZE];
         read_from_stdin(alarm_str, BUF_SIZE);
         int time;
-        sscanf(alarm_str,"%d", &time);
+        sscanf(alarm_str, "%d", &time);
         set_alarm_x_seconds_from_now(time);
         printf("You have set the alarm in %d seconds\n", time);
     }

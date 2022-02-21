@@ -41,7 +41,7 @@ void print_active_alarms()
 void set_alarm_x_seconds_from_now(int seconds)
 {
 
-    if(idx >= MAX_ALARMS)
+    if (idx >= MAX_ALARMS)
     {
         idx = 0;
     }
@@ -49,7 +49,8 @@ void set_alarm_x_seconds_from_now(int seconds)
     a.time = time(NULL) + seconds;
     // Create child process
     pid_t local_pid = fork();
-    if (local_pid == -1){
+    if (local_pid == -1)
+    {
         fprintf(stderr, "An error has occured forking");
     }
     if (local_pid == 0)
@@ -75,21 +76,31 @@ void add_alarm(char *time_str)
     strptime(time_str, DATE_FORMAT, &tm_time);
     alarm_time = mktime(&tm_time);
     time_t current_time = time(NULL);
-    if (alarm_time - current_time >0){
+    if (alarm_time - current_time > 0)
+    {
         printf("Scheduling alarm in %ld seconds\n", alarm_time - current_time);
         set_alarm_x_seconds_from_now(alarm_time - current_time);
     }
-    else{printf("Invalid time\n");}
+    else
+    {
+        printf("Invalid time\n");
+    }
 }
 
 void kill_alarm(int alarm_id)
 {
-    if (alarms[alarm_id - 1].pid != 0)
+    if (alarm_id >= 0 && alarm_id < 100 && alarms[alarm_id - 1].pid != 0)
     {
+
         kill(alarms[alarm_id - 1].pid, SIGKILL);
-        memset(&alarms[alarm_id-1], 0, sizeof(alarms[alarm_id-1]));
+        memset(&alarms[alarm_id - 1], 0, sizeof(alarms[alarm_id - 1]));
 
         waitpid(alarms[alarm_id - 1].pid, NULL, 0);
+        printf("You have cancelled alarm %d\n", alarm_id);
+    }
+    else
+    {
+        printf("%d is not a valid alarm ID\n", alarm_id);
     }
 }
 
