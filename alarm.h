@@ -89,6 +89,7 @@ void add_alarm(char *time_str)
     struct tm tm_time;
     time_t alarm_time;
     strptime(time_str, DATE_FORMAT, &tm_time);
+    tm_time.tm_isdst = -1;
     alarm_time = mktime(&tm_time);
     time_t current_time = time(NULL);
     if (alarm_time - current_time > 0)
