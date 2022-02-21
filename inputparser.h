@@ -3,31 +3,34 @@
 #include <string.h>
 #include "alarm.h"
 
-int parseinput()
-{
-    char inp[100];
-    printf("> ");
-    if (fgets(inp, 100, stdin))
-    {
-        //Consumes everything after the first character
-        char *p;
-        if (p = strchr(inp, '\n'))
-        { // check exist newline
-            *p = 0;
-        }
-        else
-        {
-            scanf("%*[^\n]");
-            scanf("%*c"); // clear upto newline
+#define BUF_SIZE 128
+#define BUF_FORMAT "%128c"
+
+int read_from_stdin(char *output, size_t buffersize){
+    memset(output, 0, buffersize);
+    char line[buffersize];
+    if (fgets(line, buffersize, stdin)){
+        if (sscanf(line, BUF_FORMAT, output) == 1){
+            int size = strlen(output);
+            output[size-1] = '\0';
+            return 1;
         }
     }
+    return 0;
+}
+
+int parseinput()
+{
+    char inp[BUF_SIZE];
+    printf("> ");
+    read_from_stdin(inp, BUF_SIZE);
+    
     if (strcmp(inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
-        char time_str[20];
-        fgets(time_str, 20, stdin);
+        char time_str[32];
+        read_from_stdin(time_str, 32);
         add_alarm(time_str);
-        getchar();
     }
     else if (strcmp(inp, "l") == 0)
     {
@@ -38,20 +41,22 @@ int parseinput()
     else if (strcmp(inp, "c") == 0)
     {
         printf("Please enter the number of the alarm you want to cancel: ");
+        char alarm_str[16];
+        read_from_stdin(alarm_str, 16);
         int alarm;
-        scanf("%d", &alarm);
+        sscanf(alarm_str, "%d", &alarm);
         kill_alarm(alarm);
         printf("You have cancelled alarm %d\n", alarm);
-        getchar();
     }
     else if (strcmp(inp, "r") == 0)
     {
         printf("Enter in how many seconds to set the alarm: ");
-        int time_str;
-        scanf("%d", &time_str);
-        set_alarm_x_seconds_from_now(time_str);
-        printf("You have set the alarm in %d seconds\n", time_str);
-        getchar();
+        char alarm_str[16];
+        read_from_stdin(alarm_str, 16);
+        int time;
+        sscanf(alarm_str,"%d", &time);
+        set_alarm_x_seconds_from_now(time);
+        printf("You have set the alarm in %d seconds\n", time);
     }
     else if (strcmp(inp, "x") == 0)
     {
