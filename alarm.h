@@ -22,6 +22,10 @@ struct alarm
 struct alarm alarms[MAX_ALARMS];
 int idx = 0;
 
+/**
+ * @brief Lists out every active alarms.
+ *
+ */
 void print_active_alarms()
 {
     for (int i = 0; i < MAX_ALARMS; i++)
@@ -38,6 +42,11 @@ void print_active_alarms()
     }
 }
 
+/**
+ * @brief Set the alarm x seconds from now object.
+ *
+ * @param seconds number of seconds from now
+ */
 void set_alarm_x_seconds_from_now(int seconds)
 {
 
@@ -69,6 +78,12 @@ void set_alarm_x_seconds_from_now(int seconds)
     }
 }
 
+/**
+ * @brief Adds alarm to the list of alarms,
+ * and activates a child process to handle the waiting.
+ *
+ * @param time_str format: "%Y-%m-%d %H:%M:%S"
+ */
 void add_alarm(char *time_str)
 {
     struct tm tm_time;
@@ -86,7 +101,12 @@ void add_alarm(char *time_str)
         printf("Invalid time\n");
     }
 }
-
+/**
+ * @brief Kills alarm using the kill(1) system call.
+ * Zombies are handled by waitpid(2).
+ *
+ * @param alarm_id refrence to alarm array
+ */
 void kill_alarm(int alarm_id)
 {
     if (alarm_id >= 0 && alarm_id < 100 && alarms[alarm_id - 1].pid != 0)
@@ -104,6 +124,10 @@ void kill_alarm(int alarm_id)
     }
 }
 
+/**
+ * @brief Kills all alarms using the kill(1) system call.
+ *
+ */
 void kill_all_alarms()
 {
     for (int i = 0; i < MAX_ALARMS; i++)
@@ -117,6 +141,10 @@ void kill_all_alarms()
     }
 }
 
+/**
+ * @brief Does a check over all alarms and kills any that have passed.
+ *
+ */
 void kill_inactive_alarms()
 {
     for (int i = 0; i < MAX_ALARMS; i++)
