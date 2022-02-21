@@ -5,7 +5,6 @@
 #include "alarm.h"
 
 #define BUF_SIZE 128
-#define BUF_FORMAT "%128c"
 
 int read_from_stdin(char *output, size_t buffersize){
     memset(output, 0, buffersize);
@@ -37,8 +36,8 @@ int parseinput()
     if (strcmp(inp, "s") == 0)
     {
         printf("Please enter the time you want to set the alarm to: ");
-        char time_str[32];
-        read_from_stdin(time_str, 32);
+        char time_str[BUF_SIZE];
+        read_from_stdin(time_str, BUF_SIZE);
         add_alarm(time_str);
     }
     else if (strcmp(inp, "l") == 0)
@@ -50,8 +49,8 @@ int parseinput()
     else if (strcmp(inp, "c") == 0)
     {
         printf("Please enter the number of the alarm you want to cancel: ");
-        char alarm_str[16];
-        read_from_stdin(alarm_str, 16);
+        char alarm_str[BUF_SIZE];
+        read_from_stdin(alarm_str, BUF_SIZE);
         int alarm;
         sscanf(alarm_str, "%d", &alarm);
         kill_alarm(alarm);
@@ -60,8 +59,8 @@ int parseinput()
     else if (strcmp(inp, "r") == 0)
     {
         printf("Enter in how many seconds to set the alarm: ");
-        char alarm_str[16];
-        read_from_stdin(alarm_str, 16);
+        char alarm_str[BUF_SIZE];
+        read_from_stdin(alarm_str, BUF_SIZE);
         int time;
         sscanf(alarm_str,"%d", &time);
         set_alarm_x_seconds_from_now(time);
